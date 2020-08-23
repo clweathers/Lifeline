@@ -2,7 +2,7 @@ let box_size = 26;
 let padding_size = 3;
 
 let columns = 13
-let rows = 12
+let rows = 23
 
 let years_expected = 78.54;
 let years_lived = 35.0;
