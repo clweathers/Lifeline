@@ -1,33 +1,78 @@
-let box_size = 26;
-let padding_size = 3;
+let columns;
+let rows;
 
-let columns = 13
-let rows = 23
+let boxSize;
+let paddingSize;
 
-let years_expected = 78.54;
-let years_lived = 35.0;
-let fraction_lived = years_lived / years_expected;
+let boxesCount;
+let boxesFilled;
 
-let background_color;
-let box_dark_color;
-let box_light_color;
+let yearsExpected = 78.54;
+let yearsLived = 35.0;
+let fractionLived = yearsLived / yearsExpected;
+
+let backgroundColor;
+let boxDarkColor;
+let boxLightColor;
 
 function setup() {
-  createCanvas(375, 667);
+  createCanvas(windowWidth, windowHeight);
+  noLoop();
+
+  updateLayout();
   
-  background_color = color(25);
-  box_dark_color = color(100);
-  box_light_color = color(200);
+  backgroundColor = color(25);
+  boxDarkColor = color(100);
+  boxLightColor = color(200);
 }
 
 function draw() {
-  background(background_color);
+  background(backgroundColor);
 
   for (let row = 0; row < rows; row++) {
     for (let column = 0; column < columns; column++) {
-      let x = (column * box_size) + ((column + 1) * padding_size)
-      let y = (row * box_size) + ((row + 1) * padding_size);
-      square(x, y, box_size);
+      let boxIndex = (row * columns) + column;
+
+      // Position
+      let x = (column * boxSize) + ((column + 1) * paddingSize)
+      let y = (row * boxSize) + ((row + 1) * paddingSize);
+
+      // Color
+      let currentBoxFillFraction = boxesFilled - boxIndex;
+      let boxColor = lerpColor(boxDarkColor, boxLightColor, currentBoxFillFraction);
+      fill(boxColor);
+
+      square(x, y, boxSize);
     }
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  updateLayout();
+  redraw();
+}
+
+function updateLayout() {
+  /*
+  columns = round(width / 30);
+  boxSize = (8 * width) / (9 * columns + 1);
+  paddingSize = boxSize / 8;
+  rows = floor((height - paddingSize) / (boxSize + paddingSize));
+  */
+
+  /*
+  let boxSize = 26;
+  let paddingSize = 3;
+  let columns = 13;
+  let rows = 23;
+  */
+
+  columns = 12;
+  boxSize = (8 * width) / (9 * columns + 1);
+  paddingSize = boxSize / 8;
+  rows = floor((height - paddingSize) / (boxSize + paddingSize));
+  
+  boxesCount = columns * rows;
+  boxesFilled = boxesCount * fractionLived;
 }
