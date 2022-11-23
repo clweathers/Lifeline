@@ -7,10 +7,6 @@ let paddingSize;
 let boxesCount;
 let boxesFilled;
 
-let yearsExpected = 78.54;
-let yearsLived = 35.0;
-let fractionLived = yearsLived / yearsExpected;
-
 let backgroundColor;
 let boxDarkColor;
 let boxLightColor;
@@ -74,5 +70,39 @@ function updateLayout() {
   rows = floor((height - paddingSize) / (boxSize + paddingSize));
   
   boxesCount = columns * rows;
-  boxesFilled = boxesCount * fractionLived;
+  boxesFilled = boxesCount * fractionLived();
+}
+
+function birthday() {
+  return new Date('1985-08-03');
+}
+
+function today() {
+  return new Date();
+}
+
+function yearsLived() {
+  var millisecondsLived = Math.abs(today() - birthday());
+  var yearsLived = millisecondsToYears(millisecondsLived);
+  return yearsLived;
+}
+
+function yearsExpected() {
+  var yearsExpected = 78.54;
+  return yearsExpected;
+}
+
+function fractionLived() {
+  var fractionLived = yearsLived() / yearsExpected();
+  return fractionLived;
+}
+
+function millisecondsToYears(milliseconds) {
+  var milliseconds_per_second = 1000;
+  var seconds_per_minute = 60;
+  var minutes_per_hour = 60;
+  var hours_per_day = 24;
+  var days_per_year = 365;
+  var years = milliseconds / milliseconds_per_second / seconds_per_minute / minutes_per_hour / hours_per_day / days_per_year;
+  return years;
 }
