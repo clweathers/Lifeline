@@ -11,6 +11,9 @@ let backgroundColor;
 let boxDarkColor;
 let boxLightColor;
 
+let modeDisplay = 0;
+let modeInput = 1;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noLoop();
